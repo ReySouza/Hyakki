@@ -26,11 +26,25 @@ function toggleMaps() {
   }
 }
 
-// Add a button to the map
+// Add an image overlay to the map
+var imageUrl = 'img/Japan.png';
+var imageBounds = [[35.50, 139.40], [35.80, 139.90]];
+var imageOverlay = L.imageOverlay(imageUrl, imageBounds);
+
+// Function to toggle the image overlay
+function toggleImageOverlay() {
+  if (map.hasLayer(imageOverlay)) {
+    map.removeLayer(imageOverlay);
+  } else {
+    imageOverlay.addTo(map);
+  }
+}
+
+// Add a button to toggle the maps
 var button = L.control({position: 'topright'});
 button.onAdd = function (map) {
   var div = L.DomUtil.create('div', 'leaflet-control-layers leaflet-control');
-  div.innerHTML = '<button onclick="toggleMaps()">Toggle Maps</button>';
+  div.innerHTML = '<button onclick="toggleMaps()">Toggle Maps</button><br><button onclick="toggleImageOverlay()">Toggle Image Overlay</button>';
   return div;
 };
 button.addTo(map);
