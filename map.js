@@ -27,7 +27,7 @@ function toggleMaps() {
 }
 
 // Add an image overlay to the map
-var imageUrl = 'img/Japan.png';
+var imageUrl = 'Hyakki/img/Japan.png';
 var imageBounds = [[35.50, 139.40], [35.80, 139.90]];
 var imageOverlay = L.imageOverlay(imageUrl, imageBounds);
 
