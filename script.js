@@ -1,9 +1,9 @@
 const data = {
       expertise: [
        {
-         name:'',
-         cost:'',
-         description:'',
+         name:'abcd',
+         cost:5,
+         description:'abcdefghijklmnopqrstuvwxyz',
        }
     ]
    }
