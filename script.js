@@ -1,8 +1,8 @@
 const data = {
       expertise: [
-         name:
-         cost: 
-         description:
+         name:'',
+         cost:'',
+         description:'',
       ]
    }
 
