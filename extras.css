@@ -262,8 +262,8 @@ nav{
     border-radius: 3px;
     border: solid;
     border-width: 0.1px;
-    border-color: #ff0000;
-    box-shadow: 0 0 10px #ff0000;
+    border-color: #ffffff;
+    box-shadow: 0 0 10px #ffffff;
 }
 
 .box {
@@ -292,9 +292,9 @@ nav{
     color: #fff;
     font-size: 22px;
     background: #0a0b0c;
-    border: 0.1px solid #ff0000;
+    border: 0.1px solid #ffffff;
     margin-right: 50px;
-    box-shadow: 0 0 10px #ff0000;
+    box-shadow: 0 0 10px #ffffff;
 }
 
 table.expertise {
