@@ -1,9 +1,11 @@
 const data = {
       expertise: [
+       {
          name:'',
          cost:'',
          description:'',
-      ]
+       }
+    ]
    }
 
 data.expertise.map((expertise, index) => {
