@@ -12,6 +12,35 @@ data.expertise.map((expertise, index) => {
    addExpertiseToTable(expertise, index)
 })
 
+const input = document.querySelector("input");
+input.addEventListener("input", function(event) {
+  console.log(event.target.value);
+});
+
+$(window).click(function (event) {
+  if (event.target.id == 'diceAttributes') {
+    diceModal.css('display', 'none')
+    $('#diceNumber').text('')
+    $('#diceType').text('')
+
+    $('.modalDice').css('transform', 'rotate(0deg)')
+    $('.modalDice').css('-webkit-transform', 'rotate(0deg)')
+  } else if (event.target.id == 'lifeModal') {
+    lifeModal.css('display', 'none')
+  } else if (event.target.id == 'sanityModal') {
+    sanityModal.css('display', 'none')
+  } else if (event.target.id == 'addWeaponModal') {
+    closeModal('#addWeaponModal')
+  } else if (event.target.id == 'addExpertiseModal') {
+     closeModal('#addExpertiseModal')
+  } else if (event.target.id == 'addExpertise2Modal') {
+     closeModal('#addExpertise2Modal')
+  } else if (event.target.id == 'addFocusModal') {
+      closeModal('#addFocusModal')
+  }
+})
+
+
 $('#addExpertise').click(function() {
    openModal('#addExpertiseModal')
 })
