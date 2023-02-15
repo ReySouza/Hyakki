@@ -350,7 +350,7 @@ table.expertise td button {
 
 .attribute { 
     grid-area: attribute;
-    height: 300px;
+    height: 400px;
 } 
 
 .attribute .grid-title {
