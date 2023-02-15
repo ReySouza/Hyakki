@@ -383,7 +383,7 @@ table.attribute {
     margin-right: auto;
     margin-block-end: auto;
     border-collapse: collapse;
-    width: 90%;
+    width: 50%;
 }
 
 table.attribute tr:first-child {
@@ -397,7 +397,7 @@ table.attribute tr {
 table.attribute th {
     text-align: center;
     height: 25px;
-    width: 10%;
+    width: 20%;
 }
 
 table.attribute td {
