@@ -15,8 +15,8 @@ const data = {
     ],
    }
 
-data.attributes.map((attributes, index) => {
-   addAttributesToTable(attributes, index)
+data.attribute.map((attribute, index) => {
+   addAttributeToTable(attribute, index)
 })
 
 data.expertise.map((expertise, index) => {
