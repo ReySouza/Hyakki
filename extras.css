@@ -272,7 +272,7 @@ nav{
 
 .expertise { 
     grid-area: expertise;
-    height: 800px;
+    height: 3000px;
 } 
 
 .expertise .grid-title {
@@ -350,7 +350,7 @@ table.expertise td button {
 
 .attribute { 
     grid-area: attribute;
-    height: 300px;
+    height: 150px;
 } 
 
 .attribute .grid-title {
@@ -382,6 +382,7 @@ table.attribute {
     margin-right: auto;
     margin-block-end: auto;
     border-collapse: collapse;
+    width: 90%;
 }
 
 table.attribute tr:first-child {
