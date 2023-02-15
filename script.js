@@ -310,6 +310,21 @@ document.getElementById('attribute').appendChild(attributeTable);
 const expertiseTable = renderTable(data.expertise, document.getElementById('expertiseCart'));
 document.getElementById('expertise').appendChild(expertiseTable);
 
+// Get a reference to the cart unordered list element
+const cart = document.getElementById("cart");
+
+// Add a new item to the cart
+function addToCart(name, cost) {
+  // Create a new li element to represent the item in the cart
+  const item = document.createElement("li");
+  item.textContent = `${name} - ${cost} pontos`;
+  
+  // Add the item to the cart list
+  cart.appendChild(item);
+}
+
+
+
 data.attribute.map((attribute, index) => {
    addAttributeToTable(attribute, index)
 })
