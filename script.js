@@ -338,6 +338,7 @@ function addAttributeToTable(attribute, id) {
         </td>
         <td>${attribute.cost}</td>
         <td>${attribute.description}</td>
+        <td><button onclick="addToCart(${id}, 'attribute')"><img src="shopping-cart.png"></button></td>
     </tr>`)
   $('table#attribute').append(newattribute)
 }
@@ -385,6 +386,7 @@ function addExpertiseToTable(expertise, id) {
         </td>
         <td>${expertise.cost}</td>
         <td>${expertise.description}</td>
+        <td><button onclick="addToCart(${id}, 'expertise')"><img src="shopping-cart.png"></button></td>
     </tr>`)
   $('table#expertise').append(newexpertise)
 }
@@ -392,6 +394,10 @@ function addExpertiseToTable(expertise, id) {
 function deleteExpertise(id) {
   $(`tr#${id}`).remove()
 }
+
+$(document).on('click', '.add-to-cart', function() {
+  const id = $(this).data('id');
+  const type = $(this).data('type');
 
 const hamburger = document.querySelector(".hamburger");
 const navLinks = document.querySelector(".nav-links");
