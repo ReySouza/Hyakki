@@ -426,3 +426,72 @@ table.attribute td button {
     width: 15px;
     font-size: 17px;
 }
+
+/* Styles for the cart container */
+.cart-container {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  border: 2px solid #ccc;
+  background-color: #fff;
+  padding: 10px;
+  width: 300px;
+}
+
+/* Styles for the cart items */
+.cart-items {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Styles for the cart total */
+.cart-total {
+  font-weight: bold;
+}
+
+/* Styles for the add to cart button */
+.add-to-cart-button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+/* Styles for the tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+/* Styles for the border class */
+.border {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
