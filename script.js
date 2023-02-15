@@ -258,7 +258,209 @@ const data = {
          description:'Morre apenas quando atingir -100% de sua vida',
        },
     ],
-   }
+   };
+const productData = [
+      {
+        name: 'Esoterica/Youjutsu',
+        price: '1',
+   },
+      {
+        name: 'Energia Sazonal',
+        price: '2',
+   },
+      {
+        name: 'Ponto de vida',
+        price: '3',
+   },
+      {
+        name: 'Stamina',
+        price: '10',
+   },
+      {
+        name: 'Visão Aguçada',
+        price: '3',
+   },
+      {
+        name: 'Audição Aguçada',
+        price: '3',
+   },
+      {
+        name: 'Paladar Aguçado',
+        price: '3',
+   },
+      {
+        name: 'Olfato Aguçado',
+        price: '3',
+   },
+      {
+        name: 'Tato Aguçado',
+        price: '3',
+   },
+      {
+        name: 'Ambidestria',
+        price: '10',
+   },
+      {
+        name: 'Benção',
+        price: '8',
+   },
+      {
+        name: 'Benção Superior',
+        price: '15',
+   },
+      {
+        name: 'Feito Heróico',
+        price: '10',
+   },
+      {
+        name: 'Brachiator',
+        price: '5',
+   },
+      {
+        name: 'Prendendo a respiração',
+        price: '2',
+   },
+      {
+        name: 'Senso Comum',
+        price: '6',
+   },
+      {
+        name: 'Clarissenciência',
+        price: '15',
+   },
+      {
+        name: 'Talento Selvagem',
+        price: '20',
+   },
+      {
+        name: 'Mestre Armamentista',
+        price: '10',
+   },
+      {
+        name: 'Talento Vocal',
+        price: '10',
+   },
+      {
+        name: 'Visualização',
+        price: '10',
+   },
+      {
+        name: 'Sentido de Vibração',
+        price: '8',
+   },
+      {
+        name: 'Empatia com Animais',
+        price: '4',
+   },
+      {
+        name: 'Poço de Mana',
+        price: '12',
+   },
+      {
+        name: 'Mana Variável',
+        price: '8',
+   },
+      {
+        name: 'Aspecto de Mana',
+        price: '6',
+   },
+      {
+        name: 'Mana Selvagem',
+        price: '8',
+   },
+      {
+        name: 'Mana Distorcida',
+        price: '6',
+   },
+      {
+        name: 'Pulo do Gato',
+        price: '6',
+   },
+      {
+        name: 'Reflexos de Combate',
+        price: '8',
+   },
+      {
+        name: 'Noção de Perigo',
+        price: '6',
+   },
+      {
+        name: 'Venturoso',
+        price: '9',
+   },
+      {
+        name: 'Empatia',
+        price: '4',
+   },
+      {
+        name: 'Bloqueio Ampliado',
+        price: '10',
+   },
+      {
+        name: 'Esquiva Ampliada',
+        price: '8',
+   },
+      {
+        name: 'Destemor',
+        price: '4',
+   },
+      {
+        name: 'Flexibilidade',
+        price: '4',
+   },
+      {
+        name: 'Ultra Flexibilidade',
+        price: '10',
+   },
+      {
+        name: 'Hipoalgia',
+        price: '6',
+   },
+      {
+        name: 'Visão Noturna',
+        price: '1',
+   },
+      {
+        name: 'Equilíbrio Perfeito',
+        price: '8',
+   },
+      {
+        name: 'Imunidade a doenças',
+        price: '3',
+   },
+      {
+        name: 'Imunidade a veneno',
+        price: '2',
+   },
+      {
+        name: 'Dextreza no Braço',
+        price: '6',
+   },
+      {
+        name: 'Voar',
+        price: '40',
+   },
+      {
+        name: 'Saṃjñā',
+        price: '8',
+   },
+      {
+        name: 'Cerimonia Secreta',
+        price: '6',
+   },
+      {
+        name: 'Bom condicionamento físico',
+        price: '10',
+   },
+      {
+        name: 'Resiliente',
+        price: '50',
+   },
+      {
+        name: 'Muito Resiliente',
+        price: '100',
+   },
+];
 
 data.attribute.map((attribute, index) => {
    addAttributeToTable(attribute, index)
@@ -404,12 +606,12 @@ $(document).on('click', '.add-to-cart', function() {
 
  const cartItems = []; // initialize an empty array to store cart items
 
-  function addToCart(dataId) {
+  function addToCart(productId) {
     // find the product in the product table by its ID
-    const data = data.find(p => p.id === dataId);
+    const product = product.find(p => p.id === productId);
 
     // add the product to the cart
-    cartItems.push(data);
+    cartItems.push(product);
 
     // update the cart display
     updateCartDisplay();
@@ -420,7 +622,7 @@ $(document).on('click', '.add-to-cart', function() {
     const cartDisplay = document.querySelector('.cart-display');
 
     // create a list of cart item names and prices
-    const cartItemsList = cartItems.map(item => `${item.name} - $${item.cost}`);
+    const cartItemsList = cartItems.map(item => `${item.name} - $${item.price}`);
 
     // update the cart display with the list of cart items
     cartDisplay.innerHTML = cartItemsList.join('<br>');
