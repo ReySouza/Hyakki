@@ -386,7 +386,7 @@ function addExpertiseToTable(expertise, id) {
         </td>
         <td>${expertise.cost}</td>
         <td>${expertise.description}</td>
-        <td><button onclick="addToCart(${id}, 'expertise')"><img src="shopping-cart.png"></button></td>
+        <td><button onclick="addToCart(${id}, 'expertise')"><img src="img/shopping-cart.png"></button></td>
     </tr>`)
   $('table#expertise').append(newexpertise)
 }
