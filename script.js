@@ -48,8 +48,8 @@ $(window).click(function (event) {
      closeModal('#addExpertise2Modal')
   } else if (event.target.id == 'addFocusModal') {
       closeModal('#addFocusModal')
-  } else if (event.target.id == 'addAttributesModal') {
-      closeModal('#addAttributesModal')
+  } else if (event.target.id == 'addAttributeModal') {
+      closeModal('#addAttributeModal')
   }
 })
 
