@@ -402,6 +402,30 @@ $(document).on('click', '.add-to-cart', function() {
   // Do something with the id and type, such as adding it to a shopping cart
 });
 
+ const cartItems = []; // initialize an empty array to store cart items
+
+  function addToCart(productId) {
+    // find the product in the product table by its ID
+    const product = products.find(p => p.id === productId);
+
+    // add the product to the cart
+    cartItems.push(product);
+
+    // update the cart display
+    updateCartDisplay();
+  }
+
+  function updateCartDisplay() {
+    // select the cart display element in the HTML
+    const cartDisplay = document.querySelector('.cart-display');
+
+    // create a list of cart item names and prices
+    const cartItemsList = cartItems.map(item => `${item.name} - $${item.price}`);
+
+    // update the cart display with the list of cart items
+    cartDisplay.innerHTML = cartItemsList.join('<br>');
+  }
+
 const hamburger = document.querySelector(".hamburger");
 const navLinks = document.querySelector(".nav-links");
 const links = document.querySelectorAll(".nav-links li");
