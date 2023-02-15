@@ -6,7 +6,6 @@ const data = {
         description:'jdfs9f9ees',
      }
    ]
-
       expertise: [
        {
          name:'abcd',
