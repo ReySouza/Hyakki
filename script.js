@@ -404,12 +404,12 @@ $(document).on('click', '.add-to-cart', function() {
 
  const cartItems = []; // initialize an empty array to store cart items
 
-  function addToCart(productId) {
+  function addToCart(dataId) {
     // find the product in the product table by its ID
-    const product = products.find(p => p.id === productId);
+    const data = data.find(p => p.id === dataId);
 
     // add the product to the cart
-    cartItems.push(product);
+    cartItems.push(data);
 
     // update the cart display
     updateCartDisplay();
@@ -420,7 +420,7 @@ $(document).on('click', '.add-to-cart', function() {
     const cartDisplay = document.querySelector('.cart-display');
 
     // create a list of cart item names and prices
-    const cartItemsList = cartItems.map(item => `${item.name} - $${item.price}`);
+    const cartItemsList = cartItems.map(item => `${item.name} - $${item.cost}`);
 
     // update the cart display with the list of cart items
     cartDisplay.innerHTML = cartItemsList.join('<br>');
