@@ -338,7 +338,7 @@ function addAttributeToTable(attribute, id) {
         </td>
         <td>${attribute.cost}</td>
         <td>${attribute.description}</td>
-        <td><button onclick="addToCart(${id}, 'attribute')"><img src="shopping-cart.png"></button></td>
+        <td><button onclick="addToCart(${id}, 'attribute')"><img src="img/shopping-cart.png"></button></td>
     </tr>`)
   $('table#attribute').append(newattribute)
 }
