@@ -304,7 +304,7 @@ table.expertise {
     margin-right: auto;
     margin-block-end: auto;
     border-collapse: collapse;
-    width: 100%;
+    width: 90%;
 }
 
 table.expertise tr:first-child {
@@ -318,7 +318,7 @@ table.expertise tr {
 table.expertise th {
     text-align: center;
     height: 25px;
-    width: 50%;
+    width: 10%;
 }
 
 table.expertise td {
@@ -351,7 +351,7 @@ table.expertise td button {
 
 .attribute { 
     grid-area: attribute;
-    height: 500px;
+    height: 300px;
 } 
 
 .attribute .grid-title {
@@ -383,7 +383,7 @@ table.attribute {
     margin-right: auto;
     margin-block-end: auto;
     border-collapse: collapse;
-    width: 100%;
+    width: 90%;
 }
 
 table.attribute tr:first-child {
@@ -397,7 +397,7 @@ table.attribute tr {
 table.attribute th {
     text-align: center;
     height: 25px;
-    width: 50%;
+    width: 10%;
 }
 
 table.attribute td {
