@@ -264,14 +264,12 @@ function createButton(item, cart) {
   const button = document.createElement('button');
   button.textContent = 'Add to Cart';
   button.addEventListener('click', () => {
-    const cartItem = document.createElement('li');
-    cartItem.textContent = item.name;
-    cart.appendChild(cartItem);
+    addToCart(item.name, item.cost);
   });
   return button;
 }
 
-function renderTable(tableData, cart) {
+function renderTable(tableData, cart, tableElement) {
   const table = document.createElement('table');
   const headerRow = document.createElement('tr');
   const nameHeader = document.createElement('th');
@@ -280,9 +278,12 @@ function renderTable(tableData, cart) {
   costHeader.textContent = 'Gasto';
   const descriptionHeader = document.createElement('th');
   descriptionHeader.textContent = 'Descrição';
+  const buttonHeader = document.createElement('th');
+  buttonHeader.textContent = 'Adicionar ao carrinho';
   headerRow.appendChild(nameHeader);
   headerRow.appendChild(costHeader);
   headerRow.appendChild(descriptionHeader);
+  headerRow.appendChild(buttonHeader);
   table.appendChild(headerRow);
   for (const item of tableData) {
     const row = document.createElement('tr');
@@ -301,29 +302,129 @@ function renderTable(tableData, cart) {
     row.appendChild(buttonCell);
     table.appendChild(row);
   }
-  return table;
+  tableElement.innerHTML = '';
+  tableElement.appendChild(table);
 }
 
-const attributeTable = renderTable(data.attribute, document.getElementById('attributeCart'));
-document.getElementById('attribute').appendChild(attributeTable);
+const attributeTableElement = document.getElementById('attribute');
+renderTable(data.attribute, cart, attributeTableElement);
 
-const expertiseTable = renderTable(data.expertise, document.getElementById('expertiseCart'));
-document.getElementById('expertise').appendChild(expertiseTable);
+const expertiseTableElement = document.getElementById('expertise');
+renderTable(data.expertise, cart, expertiseTableElement);
 
 // Get a reference to the cart unordered list element
-const cart = document.getElementById("cart");
+const cart = document.getElementById('cart-items');
 
 // Add a new item to the cart
 function addToCart(name, cost) {
   // Create a new li element to represent the item in the cart
-  const item = document.createElement("li");
+  const item = document.createElement('li');
   item.textContent = `${name} - ${cost} pontos`;
-  
+
   // Add the item to the cart list
   cart.appendChild(item);
 }
 
+// Show or hide the cart
+const cartToggleBtn = document.getElementById('cart-toggle-button');
+const cartContainer = document.getElementById('cart-container');
+cartToggleBtn.addEventListener('click', () => {
+  cartContainer.classList.toggle('cart-container--hidden');
+});
 
+// Update the cart total whenever a new item is added to the cart
+cart.addEventListener('DOMNodeInserted', () => {
+  const cartItems = cart.getElementsByTagName
+
+// Add event listener to cart toggle button
+cartToggleButton.addEventListener('click', () => {
+  cartContainer.classList.toggle('open');
+});
+
+// Render attribute table
+renderTable(attributeTable, data.attribute, 'attribute');
+
+// Render expertise table
+renderTable(expertiseTable, data.expertise, 'expertise');
+
+function renderTable(tableElement, data, tableName) {
+  // Create table header row
+  const headerRow = document.createElement('tr');
+  const nameHeader = createTableHeader('Nome');
+  const costHeader = createTableHeader('Gasto');
+  const descriptionHeader = createTableHeader('Descrição');
+  const addToCartHeader = createTableHeader('Adicionar ao carrinho');
+  headerRow.appendChild(nameHeader);
+  headerRow.appendChild(costHeader);
+  headerRow.appendChild(descriptionHeader);
+  headerRow.appendChild(addToCartHeader);
+
+  // Create table body rows
+  const bodyRows = data.map((item) => createTableRow(item, tableName));
+
+  // Clear existing table content
+  tableElement.innerHTML = '';
+
+  // Append header and body rows to table
+  tableElement.appendChild(headerRow);
+  bodyRows.forEach((row) => tableElement.appendChild(row));
+}
+
+function createTableHeader(headerText) {
+  const header = document.createElement('th');
+  header.textContent = headerText;
+  return header;
+}
+
+function createTableRow(item, tableName) {
+  const row = document.createElement('tr');
+  const nameCell = createTableCell(item.name);
+  const costCell = createTableCell(item.cost);
+  const descriptionCell = createTableCell(item.description);
+  const addToCartCell = createTableCell();
+  const addToCartButton = createAddToCartButton(item, tableName);
+  addToCartCell.appendChild(addToCartButton);
+  row.appendChild(nameCell);
+  row.appendChild(costCell);
+  row.appendChild(descriptionCell);
+  row.appendChild(addToCartCell);
+  return row;
+}
+
+function createTableCell(cellText) {
+  const cell = document.createElement('td');
+  cell.textContent = cellText || '';
+  return cell;
+}
+
+function createAddToCartButton(item, tableName) {
+  const button = document.createElement('button');
+  button.textContent = 'Add to Cart';
+  button.addEventListener('click', () => {
+    addToCart(item, tableName);
+  });
+  return button;
+}
+
+function addToCart(item, tableName) {
+  const cartItem = document.createElement('li');
+  const itemName = `${item.name} (${item.cost} pontos)`;
+  cartItem.textContent = itemName;
+  const cartItems = document.querySelector('.cart-items');
+  cartItems.appendChild(cartItem);
+  updateCartTotal(item.cost, 'add');
+}
+
+function updateCartTotal(cost, operation) {
+  const cartTotal = document.querySelector('.cart-total');
+  let currentTotal = parseInt(cartTotal.textContent) || 0;
+  if (operation === 'add') {
+    currentTotal += parseInt(cost);
+  } else if (operation === 'remove') {
+    currentTotal -= parseInt(cost);
+  }
+  cartTotal.textContent = currentTotal;
+}
 
 data.attribute.map((attribute, index) => {
    addAttributeToTable(attribute, index)
