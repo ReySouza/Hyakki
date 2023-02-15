@@ -426,6 +426,20 @@ $(document).on('click', '.add-to-cart', function() {
     cartDisplay.innerHTML = cartItemsList.join('<br>');
   }
 
+function addItemToCart(itemName) {
+  // Add item to shopping cart
+  // ...
+
+  // Show feedback message
+  var feedbackMessage = document.querySelector('.feedback-message');
+  feedbackMessage.style.display = 'block';
+
+  // Hide feedback message after 3 seconds
+  setTimeout(function() {
+    feedbackMessage.style.display = 'none';
+  }, 3000);
+}
+
 const hamburger = document.querySelector(".hamburger");
 const navLinks = document.querySelector(".nav-links");
 const links = document.querySelectorAll(".nav-links li");
