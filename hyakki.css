@@ -1,4 +1,10 @@
-      body {
-        background-image: url('sky.jpg');
+        background-image: url('your-image-url.jpg');
         background-size: cover;
+        background-position: center;
+      }
+      
+      @media (max-width: 768px) {
+        body {
+          background-size: contain;
+        }
       }
