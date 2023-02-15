@@ -259,7 +259,7 @@ const data = {
        },
     ],
    };
-const productData = [
+const product = [
       {
         name: 'Esoterica/Youjutsu',
         price: '1',
