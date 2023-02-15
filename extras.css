@@ -492,3 +492,21 @@ tr:nth-child(even) {
   padding: 10px;
   margin-bottom: 20px;
 }
+
+.shopping-cart-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #4caf50; /* Change this to your desired color */
+  color: white; /* Change this to your desired color */
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.shopping-cart-icon:hover {
+  background-color: #388e3c; /* Change this to your desired color */
+}
