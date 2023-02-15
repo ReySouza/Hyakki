@@ -1,5 +1,5 @@
 const data = {
-      attributes: [
+      attribute: [
       {
         name:'abcd',
         cost:3,
