@@ -260,6 +260,56 @@ const data = {
     ],
    }
 
+function createButton(item, cart) {
+  const button = document.createElement('button');
+  button.textContent = 'Add to Cart';
+  button.addEventListener('click', () => {
+    const cartItem = document.createElement('li');
+    cartItem.textContent = item.name;
+    cart.appendChild(cartItem);
+  });
+  return button;
+}
+
+function renderTable(tableData, cart) {
+  const table = document.createElement('table');
+  const headerRow = document.createElement('tr');
+  const nameHeader = document.createElement('th');
+  nameHeader.textContent = 'Nome';
+  const costHeader = document.createElement('th');
+  costHeader.textContent = 'Gasto';
+  const descriptionHeader = document.createElement('th');
+  descriptionHeader.textContent = 'Descrição';
+  headerRow.appendChild(nameHeader);
+  headerRow.appendChild(costHeader);
+  headerRow.appendChild(descriptionHeader);
+  table.appendChild(headerRow);
+  for (const item of tableData) {
+    const row = document.createElement('tr');
+    const nameCell = document.createElement('td');
+    nameCell.textContent = item.name;
+    const costCell = document.createElement('td');
+    costCell.textContent = item.cost;
+    const descriptionCell = document.createElement('td');
+    descriptionCell.textContent = item.description;
+    const buttonCell = document.createElement('td');
+    const button = createButton(item, cart);
+    buttonCell.appendChild(button);
+    row.appendChild(nameCell);
+    row.appendChild(costCell);
+    row.appendChild(descriptionCell);
+    row.appendChild(buttonCell);
+    table.appendChild(row);
+  }
+  return table;
+}
+
+const attributeTable = renderTable(data.attribute, document.getElementById('attributeCart'));
+document.getElementById('attribute').appendChild(attributeTable);
+
+const expertiseTable = renderTable(data.expertise, document.getElementById('expertiseCart'));
+document.getElementById('expertise').appendChild(expertiseTable);
+
 data.attribute.map((attribute, index) => {
    addAttributeToTable(attribute, index)
 })
