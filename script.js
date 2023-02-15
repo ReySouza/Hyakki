@@ -115,7 +115,7 @@ const data = {
        {
          name:'Empatia com Animais',
          cost:'4',
-         description:'Seu personagem pode descobrir a motivação de animais, ao suceder em um teste de IQ', ele saberá seu estado emocional e se está sob algum controle
+         description:'Seu personagem pode descobrir a motivação de animais, ao suceder em um teste de IQ, ele saberá seu estado emocional e se está sob algum controle',
        },
        {
          name:'Poço de Mana',
