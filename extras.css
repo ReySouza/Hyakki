@@ -280,7 +280,6 @@ nav{
 }
 
 .expertise .expertiseHeader {
-    display: flex;
     flex-direction: row;
     justify-self: center;
 }
@@ -383,7 +382,6 @@ table.attribute {
     margin-right: auto;
     margin-block-end: auto;
     border-collapse: collapse;
-    width: 50%;
 }
 
 table.attribute tr:first-child {
