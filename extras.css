@@ -427,43 +427,6 @@ table.attribute td button {
     font-size: 17px;
 }
 
-/* Styles for the cart container */
-.cart-container {
-  position: fixed;
-  top: 80px;
-  right: 20px;
-  border: 2px solid #ccc;
-  background-color: #fff;
-  padding: 10px;
-  width: 300px;
-}
-
-/* Styles for the cart items */
-.cart-items {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* Styles for the cart total */
-.cart-total {
-  font-weight: bold;
-}
-
-/* Styles for the add to cart button */
-.add-to-cart-button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-
 /* Styles for the tables */
 table {
   border-collapse: collapse;
@@ -497,16 +460,11 @@ tr:nth-child(even) {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
-  background-color: #4caf50; /* Change this to your desired color */
   color: white; /* Change this to your desired color */
-  font-size: 18px;
+  font-size: 17px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-}
-
-.shopping-cart-icon:hover {
-  background-color: #388e3c; /* Change this to your desired color */
 }
