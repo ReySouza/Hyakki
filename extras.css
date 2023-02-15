@@ -349,6 +349,11 @@ table.expertise td button {
     font-size: 17px;
 }
 
+.attribute { 
+    grid-area: attribute;
+    height: 800px;
+} 
+
 .attribute .grid-title {
     flex: 1;
 }
