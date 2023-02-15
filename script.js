@@ -1,4 +1,12 @@
 const data = {
+      attributes: [
+      {
+        name:'abcd',
+        cost:3,
+        description:'jdfs9f9ees',
+     }
+   ]
+
       expertise: [
        {
          name:'abcd',
@@ -7,6 +15,10 @@ const data = {
        }
     ]
    }
+
+data.attributes.map((attributes, index) => {
+   addAttributesToTable(attributes, index)
+})
 
 data.expertise.map((expertise, index) => {
    addExpertiseToTable(expertise, index)
@@ -37,9 +49,58 @@ $(window).click(function (event) {
      closeModal('#addExpertise2Modal')
   } else if (event.target.id == 'addFocusModal') {
       closeModal('#addFocusModal')
+  } else if (event.target.id == 'addAttributesModal') {
+      closeModal('#addAttributesModal')
   }
 })
 
+
+$('#addAttribute').click(function() {
+   openModal('#addAttributeModal')
+})
+
+$('#addAttributeForm').submit(function (event) {
+  var attributeCost = ''
+
+  if ($('#attributeCost').val() == 1) {
+    attributeCost = 1
+  } else if ($('#attributeCost').val() == 2) {
+    attributeCost = 2
+  } else if ($('#attributeCost').val() == 3) {
+    attributeCost = 3
+  }
+
+  const attribute = {
+    name: $('#attributeName').val(),
+    cost: $('#attributeCost').val(),
+    description: $('#attributeDescription').val(),
+  }
+
+  data.attribute.push(attribute)
+  const id = data.attribute.length - 1
+  addAttributeToTable(attribute, id)
+
+  closeModal('#addAttributeModal')
+  event.preventDefault()
+})
+
+function addAttributeToTable(attribute, id) {
+  const newattribute = $(`<tr id="attribute_${id}">
+        <td>
+            <button onclick="deleteAttribute(${id})">
+                <i class="fa fa-trash-o trashcan"></i>
+            </button>
+            ${attribute.name}
+        </td>
+        <td>${attribute.cost}</td>
+        <td>${attribute.description}</td>
+    </tr>`)
+  $('table#attribute').append(newattribute)
+}
+
+function deleteAttribute(id) {
+  $(`tr#${id}`).remove()
+}
 
 $('#addExpertise').click(function() {
    openModal('#addExpertiseModal')
