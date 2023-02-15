@@ -4,15 +4,15 @@ const data = {
         name:'abcd',
         cost:3,
         description:'jdfs9f9ees',
-     }
-   ]
+     },
+   ],
       expertise: [
        {
          name:'abcd',
          cost:5,
          description:'abcdefghijklmnopqrstuvwxyz',
-       }
-    ]
+       },
+    ],
    }
 
 data.attributes.map((attributes, index) => {
