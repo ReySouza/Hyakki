@@ -1,9 +1,24 @@
 const data = {
       attribute: [
       {
-        name:'abcd',
-        cost:3,
-        description:'jdfs9f9ees',
+        name:'Esoterica/Youjutsu',
+        cost:'1 por nível',
+        description:'Atributo básico de mana, consumido quando magias são conjuradas',
+     },
+     {
+        name:'Energia Sazonal',
+        cost:'2 por nível',
+        description:'Atributo de energia sazonal nativa para todas as criaturas vivas',
+     },
+      {
+        name:'Ponto de vida (PV)',
+        cost: '3 por nível',
+        description:'Garantem que um personagem consiga sobreviver',
+     },
+      {
+        name:'Ponto de Fatiga/Stamina',
+        cost:'10 pontos por nível',
+        description:'Quantidade de pontos de stamina de um personagem, se ele zerar estes pontos, terá sua STR cortada pela metade',
      },
    ],
       expertise: [
