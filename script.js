@@ -398,6 +398,9 @@ function deleteExpertise(id) {
 $(document).on('click', '.add-to-cart', function() {
   const id = $(this).data('id');
   const type = $(this).data('type');
+  
+  // Do something with the id and type, such as adding it to a shopping cart
+});
 
 const hamburger = document.querySelector(".hamburger");
 const navLinks = document.querySelector(".nav-links");
