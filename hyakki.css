@@ -60,5 +60,7 @@ h2.grid-title {
 .image {
 	float: left;
 	margin-right: 20px;
+	height: 50%;
+	width: 50%;
 		}
 
