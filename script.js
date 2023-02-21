@@ -257,7 +257,7 @@ const data = {
          cost:'100',
          description:'Morre apenas quando atingir -100% de sua vida',
        },
-    ];
+    ]
    };
 
 data.attribute.map((attribute, index) => {
