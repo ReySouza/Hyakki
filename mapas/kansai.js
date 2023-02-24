@@ -80,7 +80,7 @@ var img = document.querySelector("img");
         break;
     }
 
-    img.src = "Kansai - " + seasonName + ".jpg";
+    img.src = "img/Kansai - " + seasonName + ".jpg";
     button.setAttribute("data-season", currentSeason);
   }
 
