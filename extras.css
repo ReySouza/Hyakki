@@ -479,3 +479,18 @@ tr:nth-child(even) {
   z-index: 1;
   border-radius: 5px;
 }
+
+		/* Your CSS styles here */
+		.cart {
+			display: none; /* Hide the cart by default */
+			position: absolute;
+			top: 50px; /* Adjust the top position as needed */
+			right: 0;
+			background-color: #f1f1f1;
+			border: 1px solid #ccc;
+			padding: 10px;
+			z-index: 1; /* Make sure the cart appears on top of other elements */
+		}
+		.cart.show {
+			display: block; /* Show the cart when the "show" class is added */
+		}
