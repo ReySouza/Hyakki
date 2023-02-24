@@ -418,3 +418,22 @@ hamburger.addEventListener('click', ()=>{
       // Display the results
       document.getElementById("outputDisplay").innerHTML = "Output: " + output;
     }
+
+// Get the cart toggle button and cart div elements
+		var cartToggle = document.getElementById('cart-toggle');
+		var cart = document.getElementById('cart');
+		var cartClose = document.getElementById('cart-close');
+
+		// Add an event listener to the cart toggle button to show/hide the cart
+		cartToggle.addEventListener('click', function() {
+			cart.classList.toggle('show');
+
+			// Update the cart toggle text with the number of items in the cart
+			var cartItems = document.querySelectorAll('#cart-items li').length;
+			cartToggle.innerHTML = 'Cart (' + cartItems + ')';
+		});
+
+		// Add an event listener to the cart close button to hide the cart
+		cartClose.addEventListener('click', function() {
+			cart.classList.remove('show');
+		});
