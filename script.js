@@ -1,5 +1,3 @@
-let cart = [];
-
 const data = {
       attribute: [
       {
