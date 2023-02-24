@@ -419,7 +419,40 @@ hamburger.addEventListener('click', ()=>{
       document.getElementById("outputDisplay").innerHTML = "Output: " + output;
     }
 
-// Get the cart toggle button and cart div elements
+var cart = [];
+
+  function addToCart(item) {
+    cart.push(item);
+    alert('Item adicionado ao carrinho!');
+    console.log(cart);
+  }
+
+function addItem(item) {
+  // Add item to the cartItems array
+  cartItems.push(item);
+
+  // Update the cart table
+  var cartTable = document.getElementById("cart-items");
+  var total = 0;
+  cartTable.innerHTML = "";
+  cartItems.forEach(function(item) {
+    var row = document.createElement("tr");
+    var nameCell = document.createElement("td");
+    var priceCell = document.createElement("td");
+    nameCell.textContent = item.name;
+    priceCell.textContent = item.price;
+    row.appendChild(nameCell);
+    row.appendChild(priceCell);
+    cartTable.appendChild(row);
+    total += item.price;
+  });
+
+  // Update the total
+  var cartTotal = document.getElementById("cart-total");
+  cartTotal.textContent = total;
+}
+
+	// Get the cart toggle button and cart div elements
 		var cartToggle = document.getElementById('cart-toggle');
 		var cart = document.getElementById('cart');
 		var cartClose = document.getElementById('cart-close');
@@ -437,3 +470,4 @@ hamburger.addEventListener('click', ()=>{
 		cartClose.addEventListener('click', function() {
 			cart.classList.remove('show');
 		});
+
