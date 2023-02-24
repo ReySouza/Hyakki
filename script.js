@@ -421,8 +421,6 @@ hamburger.addEventListener('click', ()=>{
       document.getElementById("outputDisplay").innerHTML = "Output: " + output;
     }
 
-var cart = [];
-
   function addToCart(item) {
     cart.push(item);
     alert('Item adicionado ao carrinho!');
