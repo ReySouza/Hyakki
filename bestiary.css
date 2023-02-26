@@ -53,10 +53,10 @@ h2.grid-title {
 }
 
 img {
-  box-shadow: 0 0 10px 5px #fff;
-  transition: box-shadow 0.3s ease-in-out;
+  outline: none;
+  transition: outline 0.3s ease-in-out;
 }
 
-img:hover {
-  box-shadow: 0 0 10px 10px #fff, 0 0 20px 15px #fff;
+img:focus {
+  outline: 2px solid #fff;
 }
