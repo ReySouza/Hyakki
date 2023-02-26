@@ -12,14 +12,9 @@ body {
     font-family: 'Itim', sans-serif;
 }
 
-@media screen and (max-width: 500px) {
-  .header a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-  .header-right {
-    float: none;
+@media screen and (max-width: 768px) {
+  img {
+    position: static;
   }
 }
 
