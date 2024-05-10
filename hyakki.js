@@ -7,6 +7,8 @@ function checkPassword(event) {
                     window.location.href = "https://reysouza.github.io/Hyakki/karasawa.html";
                 } else if (password === "731"){
                     window.location.href = "https://reysouza.github.io/Hyakki/731.html";
+                } else if (password === "huludao"){
+                    windows.location.href = "https://reysouza.github.io/Hyakki/huludao.html";
                 } else if (password === "lunachama"){
                     window.location.href = "https://reysouza.github.io/Hyakki/lunaflama.html";
             } else {
