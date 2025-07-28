@@ -10,12 +10,28 @@
     <link rel="stylesheet" href="hyakki.css" />
     <title>雪の金閣 静寂に光る</title>
     <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center; /* center horizontally */
+        align-items: center;    /* center vertically */
+        background: #000; /* optional background */
+      }
+
+      .container {
+        display: flex;
+        width: 90vw;
+        max-width: 1200px;
+        height: 360px; /* height matches 16:9 video approx 640x360 */
+        gap: 40px;
+      }
 
       .video-container {
-        width: 640px; /* desired width */
-        max-width: 90%; /* responsive on small screens */
-        aspect-ratio: 16/9; /* keeps 16:9 ratio */
+        flex: 1 1 640px;
         position: relative;
+        aspect-ratio: 16/9;
       }
 
       .video-container iframe {
@@ -24,15 +40,37 @@
         height: 100%;
         border: none;
       }
+
+      .image-container {
+        flex: 1 1 640px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #222; /* dark background placeholder */
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+      }
     </style>
   </head>
   <body>
-    <div class="video-container">
-      <iframe 
-        src="https://www.youtube.com/embed/L-zfio7L0gM?si=jirRZVb6cQGtFseJ"
-        allow="autoplay; fullscreen"
-        allowfullscreen>
-      </iframe>
+    <div class="container">
+      <div class="video-container">
+        <iframe 
+          src="https://www.youtube.com/embed/L-zfio7L0gM?si=jirRZVb6cQGtFseJ&autoplay=1&mute=1&controls=1"
+          allow="autoplay; fullscreen"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="image-container">
+        <img src="https://via.placeholder.com/640x360.png?text=Sua+imagem+aqui" />
+      </div>
     </div>
   </body>
 </html>
