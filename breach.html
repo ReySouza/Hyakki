@@ -422,6 +422,81 @@
 
           <div class="zone" data-corrupt="true">
             <div class="zone-title">
+              <b>ZONA 1</b>
+              <span class="zone-tag">TRANSIÇÃO / “CORREDOR”</span>
+            </div>
+            <div class="zone-desc">
+              Passagem estreita com sensação de inclinação impossível. Superfícies “úmidas” sem fonte.
+              O som do próprio passo chega atrasado. Placas/inscrições aparecem e somem em <span class="alert">ordens diferentes</span>.
+            </div>
+            <div class="zone-danger">
+              Risco: <span class="alert">deriva de referência</span> • A bússola semântica falha.
+              Protocolo: manter âncora verbal curta (3 sílabas) e repetir a cada <span class="alert">██</span> segundos.
+            </div>
+          </div>
+          
+          <div class="zone" data-corrupt="true">
+            <div class="zone-title">
+              <b>ZONA 2</b>
+              <span class="zone-tag">ARQUIVO / “PAPEL”</span>
+            </div>
+            <div class="zone-desc">
+              Espaço com volumes, gavetas e folhas sem escrita — até você olhar de novo.
+              Kanji se reorganizam como se estivessem “testando” o leitor. Leituras longas induzem <span class="alert">eco cognitivo</span>.
+            </div>
+            <div class="zone-danger">
+              Risco: <span class="alert">contaminação semântica</span> • Evitar copiar símbolos.
+              Qualquer anotação manual deve ser reclassificada como <span class="alert">material contaminável</span>.
+            </div>
+          </div>
+          
+          <div class="zone" data-corrupt="true">
+            <div class="zone-title">
+              <b>ZONA 3</b>
+              <span class="zone-tag">SALÃO / “SEM NOME”</span>
+            </div>
+            <div class="zone-desc">
+              Interiores vazios com biombos e divisórias que mudam quando você não está olhando.
+              Presença de sombras “sem dono”. Temperatura constante, mas a pele insiste em sentir <span class="alert">vento</span>.
+            </div>
+            <div class="zone-danger">
+              Risco: <span class="alert">perda de identidade</span> • Chamados por nomes incorretos foram registrados.
+              Responder ao chamado errado é um gatilho de <span class="alert">aderência</span>.
+            </div>
+          </div>
+          
+          <div class="zone" data-corrupt="true">
+            <div class="zone-title">
+              <b>ZONA 4</b>
+              <span class="zone-tag">ÁGUAS / “LOTUS”</span>
+            </div>
+            <div class="zone-desc">
+              Ruído de água contínuo e grave (sem curso visível). A música “aparece” como se fosse do ambiente,
+              não do equipamento. Instrumentos registram banda estreita persistente, como um <span class="alert">servidor respirando</span>.
+            </div>
+            <div class="zone-danger">
+              Risco: <span class="alert">sincronização involuntária</span> • O corpo tenta acompanhar o droning.
+              Recomenda-se exposição rotativa e intervalos de silêncio forçado.
+            </div>
+          </div>
+          
+          <div class="zone" data-corrupt="true">
+            <div class="zone-title">
+              <b>ZONA 5</b>
+              <span class="zone-tag">PÁTIO / “IMPUREZA”</span>
+            </div>
+            <div class="zone-desc">
+              Torii quebrados / estruturas ritualísticas incompletas. O lugar parece “quase sagrado”, mas errado.
+              A luz não faz sombra do jeito certo. O ar tem cheiro de ferro e incenso queimado há <span class="alert">muito tempo</span>.
+            </div>
+            <div class="zone-danger">
+              Risco: <span class="alert">hostilidade indireta</span> • A zona reage a observação prolongada.
+              O primeiro sinal do “olho” costuma ser auditivo.
+            </div>
+          </div>
+
+          <div class="zone" data-corrupt="true">
+            <div class="zone-title">
               <b>ZONA 6/7</b>
               <span class="zone-tag">浅間浄穢山 / PIRÂMIDE</span>
             </div>
@@ -435,20 +510,23 @@
             </div>
           </div>
 
-          <div class="zone" data-corrupt="true">
+          <div class="zone" data-corrupt="true" id="zone-moon">
             <div class="zone-title">
               <b>ZONA ???</b>
               <span class="zone-tag">LUA</span>
             </div>
+          
             <div class="zone-desc">
-              Ponto final. A Terra Pura no fim do túnel.<span class="alert">destino da humanidade</span>.
+              <span id="moonText">
+                Ponto final. A Terra Pura no fim do túnel.<span class="alert">destino da humanidade</span>.
+              </span>
             </div>
+          
             <div class="zone-danger">
               Status: <span class="alert">inalcançável</span> • Qualquer rota “confiável” colapsa em contradição.
               SDOL/EDOL acima do limiar. <span class="alert">Não levar nomes para lá.</span>
             </div>
           </div>
-        </div>
 
         <div class="hr"></div>
 
@@ -470,91 +548,183 @@ SDOL: ██████▒▒▒▒
   </div>
 
   <script>
-    (function(){
-      const root = document.getElementById("root");
-      const bgm = document.getElementById("bgm");
-      const corruptables = Array.from(document.querySelectorAll("[data-corrupt='true']"));
-      const originals = new Map();
-      corruptables.forEach(el => originals.set(el, el.textContent));
-
-      let glitchLevel = 1; // 0..2
-      let running = true;
-
-      // áudio: iniciar no primeiro gesto do usuário
-      function startAudio(){
-        bgm.volume = 0.65;
-        bgm.play().catch(()=>{});
+  (function(){
+    const root = document.getElementById("root");
+    const bgm = document.getElementById("bgm");
+  
+    const corruptables = Array.from(document.querySelectorAll("[data-corrupt='true']"));
+    const originals = new Map();
+    corruptables.forEach(el => originals.set(el, el.textContent));
+  
+    // LUA instável
+    const moonZone = document.getElementById("zone-moon");
+    const moonTextEl = document.getElementById("moonText");
+    const moonVariants = [
+      "Ponto final. A Terra Pura no fim do túnel. destino da humanidade.",
+      "Ponto final. A Terra Pura no fim do túnel. ███████ da humanidade.",
+      "Ponto final. ███████████████████████████████████████████",
+      "Ponto final. A ██████ Pura no fim do ██████. ████████ ████████.",
+      "Ponto final. [UNRENDERABLE]"
+    ];
+  
+    let moonAggravate = false;
+  
+    // glitch mais agressivo por padrão
+    let glitchLevel = 2; // 0..2
+    let running = true;
+  
+    // áudio: iniciar no primeiro gesto do usuário
+    function startAudio(){
+      bgm.volume = 0.65;
+      bgm.play().catch(()=>{});
+    }
+    document.addEventListener("pointerdown", startAudio, { once:true });
+    document.addEventListener("keydown", startAudio, { once:true });
+  
+    function randInt(a,b){ return Math.floor(a + Math.random()*(b-a+1)); }
+  
+    function corruptText(text, strength){
+      const chars = text.split("");
+      // pool mais “culto alien / inimigo”: mistura blocos + símbolos + kanji
+      const pool = "█▓▒░<>/\\|_-=+*~!?…#@祭祀眼門月終密破侵";
+      const n = Math.max(1, Math.floor(chars.length * strength));
+      for(let i=0;i<n;i++){
+        const idx = randInt(0, chars.length-1);
+        if(chars[idx] === "\n") continue;
+        if(Math.random() < 0.18) continue; // menos “piedade”, mais violência
+        chars[idx] = pool[randInt(0, pool.length-1)];
       }
-      document.addEventListener("pointerdown", startAudio, { once:true });
-      document.addEventListener("keydown", startAudio, { once:true });
-
-      function randInt(a,b){ return Math.floor(a + Math.random()*(b-a+1)); }
-
-      function corruptText(text, strength){
-        const chars = text.split("");
-        const pool = "█▓▒░<>/\\|_-=+*~!?…#@";
-        const n = Math.max(1, Math.floor(chars.length * strength));
-        for(let i=0;i<n;i++){
-          const idx = randInt(0, chars.length-1);
-          if(chars[idx] === "\n") continue;
-          if(Math.random() < 0.35) continue;
-          chars[idx] = pool[randInt(0, pool.length-1)];
+      return chars.join("");
+    }
+  
+    // jitter mais violento + “rasgo”
+    function jitter(){
+      if(!running || glitchLevel === 0) return;
+  
+      const amt = glitchLevel === 1 ? 1.4 : 4.2;
+      const x = (Math.random()*2-1)*amt;
+      const y = (Math.random()*2-1)*amt;
+  
+      // skew curto dá sensação de “ataque”
+      const skew = glitchLevel === 2 ? (Math.random()*2-1)*0.35 : 0.12;
+      root.style.transform = `translate3d(${x}px, ${y}px, 0) skewX(${skew}deg)`;
+  
+      setTimeout(()=> root.style.transform = "translate3d(0,0,0)", randInt(30, 90));
+    }
+  
+    function pulseCorrupt(){
+      if(!running || glitchLevel === 0) return;
+  
+      // força maior; ainda alterna com “normal” pra parecer instável (não constante)
+      const strengthBase = glitchLevel === 1 ? 0.03 : 0.085;
+  
+      corruptables.forEach(el => {
+        const base = originals.get(el);
+        if(Math.random() < 0.22){
+          el.textContent = base;
+          return;
         }
-        return chars.join("");
-      }
-
-      function jitter(){
-        if(!running || glitchLevel === 0) return;
-        const amt = glitchLevel === 1 ? 0.9 : 2.6;
-        const x = (Math.random()*2-1)*amt;
-        const y = (Math.random()*2-1)*amt;
-        root.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-        setTimeout(()=> root.style.transform = "translate3d(0,0,0)", randInt(40, 120));
-      }
-
-      function pulseCorrupt(){
-        if(!running || glitchLevel === 0) return;
-        const strength = glitchLevel === 1 ? 0.018 : 0.06;
-        corruptables.forEach(el => {
-          const base = originals.get(el);
-          if(Math.random() < 0.33){
-            el.textContent = base;
-            return;
-          }
-          el.textContent = corruptText(base, strength);
-        });
-      }
-
-      function flicker(){
-        if(!running || glitchLevel === 0) return;
-        const o = glitchLevel === 1 ? 0.98 : 0.92;
-        const dip = glitchLevel === 1 ? 0.86 : 0.66;
-        if(Math.random() < 0.14){
-          document.body.style.opacity = dip;
-          setTimeout(()=> document.body.style.opacity = o, randInt(50, 160));
-        } else {
-          document.body.style.opacity = o;
-        }
-      }
-
-      window.addEventListener("keydown", (e)=>{
-        if(e.key === "Escape"){
-          glitchLevel = 0;
-          corruptables.forEach(el => el.textContent = originals.get(el));
-          document.body.style.opacity = 1;
-        }
-        if(e.key.toLowerCase() === "r"){
-          glitchLevel = 1;
-        }
-        if(e.key === "?"){
-          alert("SINAL NÃO AUTORIZADO.\n\nIsto não é ONIROS.\nIsto está usando ONIROS.");
-        }
+        el.textContent = corruptText(base, strengthBase);
       });
-
-      setInterval(jitter, 230);
-      setInterval(pulseCorrupt, 410);
-      setInterval(flicker, 350);
-    })();
+    }
+  
+    function flicker(){
+      if(!running || glitchLevel === 0) return;
+  
+      const o = glitchLevel === 1 ? 0.98 : 0.95;
+      const dip = glitchLevel === 1 ? 0.78 : 0.52;
+  
+      if(Math.random() < (glitchLevel === 2 ? 0.22 : 0.12)){
+        document.body.style.opacity = dip;
+        // “flash” hostil
+        document.body.style.filter = "contrast(1.25) saturate(1.15)";
+        setTimeout(()=>{
+          document.body.style.opacity = o;
+          document.body.style.filter = "";
+        }, randInt(40, 140));
+      } else {
+        document.body.style.opacity = o;
+      }
+    }
+  
+    // burst: “ataque” ocasional (bem Kane/analog horror)
+    function burst(){
+      if(!running || glitchLevel !== 2) return;
+  
+      const chance = moonAggravate ? 0.35 : 0.18;
+      if(Math.random() > chance) return;
+  
+      // por 120-260ms, destrói mais forte
+      const until = Date.now() + randInt(120, 260);
+      const interval = setInterval(()=>{
+        if(Date.now() > until){
+          clearInterval(interval);
+          return;
+        }
+        jitter();
+        pulseCorrupt();
+        // micro blackout
+        if(Math.random() < 0.25){
+          document.body.style.opacity = 0.35;
+          setTimeout(()=> document.body.style.opacity = 0.95, 60);
+        }
+      }, 45);
+    }
+  
+    // LUA: recusa renderizar completamente
+    function moonUnrender(){
+      if(!moonTextEl) return;
+  
+      const aggressive = (glitchLevel === 2 && moonAggravate);
+      const pick = aggressive ? randInt(2, moonVariants.length-1) : randInt(0, 3);
+  
+      // às vezes mostra “quase tudo”, mas não deixa sustentar
+      moonTextEl.textContent = moonVariants[pick];
+  
+      // colapso rápido: apaga parte do texto sempre
+      if(Math.random() < (aggressive ? 0.85 : 0.55)){
+        setTimeout(()=>{
+          moonTextEl.textContent = moonVariants[randInt(2, moonVariants.length-1)];
+        }, randInt(120, 420));
+      }
+    }
+  
+    // mouse sobre a LUA = piora
+    if(moonZone){
+      moonZone.addEventListener("pointerenter", ()=>{
+        moonAggravate = true;
+      });
+      moonZone.addEventListener("pointerleave", ()=>{
+        moonAggravate = false;
+      });
+    }
+  
+    // Hotkeys
+    window.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape"){
+        glitchLevel = 0;
+        corruptables.forEach(el => el.textContent = originals.get(el));
+        document.body.style.opacity = 1;
+        document.body.style.filter = "";
+        if(moonTextEl) moonTextEl.textContent = moonVariants[0];
+      }
+      if(e.key.toLowerCase() === "r"){
+        glitchLevel = 2;
+      }
+      if(e.key === "?"){
+        alert("SINAL NÃO AUTORIZADO.\n\nIsto não é ONIROS.\nIsto está usando ONIROS.\n\nSe a LUA aparece inteira: feche a página.");
+      }
+    });
+  
+    // loops (mais rápidos = mais “violentos”)
+    setInterval(jitter, 120);
+    setInterval(pulseCorrupt, 180);
+    setInterval(flicker, 210);
+    setInterval(burst, 420);
+  
+    // LUA instável sempre “vaza”
+    setInterval(moonUnrender, 260);
+  })();
   </script>
 </body>
 </html>
