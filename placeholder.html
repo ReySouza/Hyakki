@@ -5,34 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Okinasai</title>
     <style>
-      html, body {
-        margin: 0;
-        height: 100%;
-        background: #0a0b0c;
-      }
-
-      .wrap {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .frame {
-        position: relative;
-        display: inline-block;
-        line-height: 0;
-      }
-
-      img {
-        display: block;
-        max-width: 100vw;
-        max-height: 100vh;
-        width: auto;
-        height: auto;
-        user-select: none;
-        -webkit-user-drag: none;
-      }
+      html, body { margin: 0; height: 100%; background: #0a0b0c; }
+      .wrap { height: 100%; display: flex; align-items: center; justify-content: center; }
+      .frame { position: relative; display: inline-block; line-height: 0; }
+      img { display: block; max-width: 100vw; max-height: 100vh; width: auto; height: auto; }
 
       .door-hotspot {
         position: absolute;
@@ -41,249 +17,67 @@
         width: 13.96%;
         height: 18.16%;
         cursor: pointer;
+      }
 
-        /* Debug opcional:
-        outline: 2px solid rgba(255, 0, 0, 0.6);
-        background: rgba(255, 0, 0, 0.15);
-        */
+      /* fallback bem discreto */
+      .audio-hint {
+        position: fixed;
+        left: 50%;
+        bottom: 18px;
+        transform: translateX(-50%);
+        padding: 10px 14px;
+        border: 1px solid rgba(255,255,255,0.25);
+        border-radius: 10px;
+        background: rgba(10,11,12,0.75);
+        color: #fff;
+        font: 14px/1.2 sans-serif;
+        display: none;
+        cursor: pointer;
+        user-select: none;
       }
     </style>
   </head>
 
   <body>
-    <!-- Música de fundo (troque o src depois) -->
-    <audio
-      id="bgm"
-      src="LotusWaters.mp3"
-      preload="auto"
-      loop
-      playsinline
-      crossorigin="anonymous"
-    ></audio>
+    <!-- Troque o src para o seu arquivo (ex: LotusWaters.mp3) -->
+    <audio id="bgm" src="LotusWaters.mp3" autoplay loop preload="auto"></audio>
 
     <div class="wrap">
       <div class="frame" id="stage">
         <img src="1.png" alt="Teaser" />
-        <a
-          class="door-hotspot"
-          id="door"
-          href="https://SUA-URL-AQUI.example/DESTINO"
-          aria-label="Entrar"
-        ></a>
+        <a class="door-hotspot" href="https://SUA-URL-AQUI.example/DESTINO" aria-label="Entrar"></a>
       </div>
     </div>
 
+    <div class="audio-hint" id="audioHint">▶ Clique para iniciar o áudio</div>
+
     <script>
-      (function () {
-        const bgm = document.getElementById("bgm");
-        const stage = document.getElementById("stage");
-        const door = document.getElementById("door");
+      const bgm = document.getElementById("bgm");
+      const hint = document.getElementById("audioHint");
 
-        // ===== Ajustes rápidos =====
-        const BASE_VOLUME = 0.6;        // volume normal
-        const GLITCH_RADIUS_PX = 260;   // quão perto precisa estar pra "puxar" o glitch
-        const GLITCH_THRESHOLD = 0.55;  // a partir de qual intensidade começam bursts ocasionais
-        // ==========================
+      bgm.volume = 0.6;
 
-        bgm.volume = BASE_VOLUME;
-
-        let audioCtx, src, master, dryGain, wetGain, filter, delay, feedback, gate;
-        let intensity = 0;          // 0..1
-        let glitchTimer = null;
-        let rafPending = false;
-
-        // Cria o grafo de áudio (só depois de gesto do usuário)
-        function setupAudioGraph() {
-          if (audioCtx) return;
-
-          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-          src = audioCtx.createMediaElementSource(bgm);
-
-          master = audioCtx.createGain();
-          master.gain.value = 1.0;
-
-          dryGain = audioCtx.createGain();
-          dryGain.gain.value = 1.0;
-
-          wetGain = audioCtx.createGain();
-          wetGain.gain.value = 0.0;
-
-          // Efeitos "dreamcore": lowpass + delay curto + gate (queda/estalo)
-          filter = audioCtx.createBiquadFilter();
-          filter.type = "lowpass";
-          filter.frequency.value = 12000; // aberto no normal
-          filter.Q.value = 0.7;
-
-          delay = audioCtx.createDelay(0.3);
-          delay.delayTime.value = 0.02;
-
-          feedback = audioCtx.createGain();
-          feedback.gain.value = 0.12;
-
-          gate = audioCtx.createGain();
-          gate.gain.value = 1.0;
-
-          // Dry path
-          src.connect(dryGain).connect(master);
-
-          // Wet path: src -> filter -> gate -> delay -> (feedback) -> wet
-          src.connect(filter);
-          filter.connect(gate);
-          gate.connect(delay);
-          delay.connect(feedback);
-          feedback.connect(delay);
-          delay.connect(wetGain).connect(master);
-
-          master.connect(audioCtx.destination);
-        }
-
-        async function startAudio() {
-          setupAudioGraph();
-          try {
-            if (audioCtx.state === "suspended") await audioCtx.resume();
-          } catch (_) {}
-
-          // Autoplay com som geralmente é bloqueado: aqui a gente começa no gesto do usuário.
-          try {
-            await bgm.play();
-          } catch (_) {
-            // Se falhar, fica pronto pra próxima interação
-          }
-        }
-
-        // Atualiza parâmetros com base na intensidade (0..1)
-        function applyIntensity(x) {
-          intensity = x;
-
-          if (!audioCtx) return;
-
-          const now = audioCtx.currentTime;
-
-          // Mistura wet (glitch) aumenta com proximidade
-          const wet = Math.pow(intensity, 1.35); // curva mais dramática
-          wetGain.gain.setTargetAtTime(wet * 0.9, now, 0.03);
-
-          // Lowpass fecha conforme chega perto (fica "submerso")
-          const minFreq = 650;      // bem fechado
-          const maxFreq = 12000;    // aberto
-          const freq = minFreq + (maxFreq - minFreq) * (1 - wet);
-          filter.frequency.setTargetAtTime(freq, now, 0.04);
-
-          // Delay cresce um pouco (eco curto/estranho)
-          const d = 0.02 + 0.12 * wet;
-          delay.delayTime.setTargetAtTime(d, now, 0.04);
-
-          // Feedback sobe levemente
-          const fb = 0.10 + 0.22 * wet;
-          feedback.gain.setTargetAtTime(fb, now, 0.05);
-
-          // Começa/para bursts ocasionais
-          if (intensity >= GLITCH_THRESHOLD && !glitchTimer) startGlitchBursts();
-          if (intensity < GLITCH_THRESHOLD && glitchTimer) stopGlitchBursts();
-        }
-
-        // Mede distância do mouse até o centro da porta, converte em 0..1
-        function computeIntensityFromPointer(clientX, clientY) {
-          const r = door.getBoundingClientRect();
-          const cx = r.left + r.width / 2;
-          const cy = r.top + r.height / 2;
-
-          const dx = clientX - cx;
-          const dy = clientY - cy;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          const t = 1 - Math.min(1, dist / GLITCH_RADIUS_PX);
-          return Math.max(0, t);
-        }
-
-        function onPointerMove(e) {
-          if (rafPending) return;
-          rafPending = true;
-
-          requestAnimationFrame(() => {
-            rafPending = false;
-            const x = computeIntensityFromPointer(e.clientX, e.clientY);
-            applyIntensity(x);
+      function tryPlay() {
+        const p = bgm.play();
+        if (p && typeof p.catch === "function") {
+          p.catch(() => {
+            // Autoplay bloqueado -> mostra fallback
+            hint.style.display = "block";
           });
         }
+      }
 
-        function onPointerLeave() {
-          applyIntensity(0);
-        }
+      // tenta tocar ao carregar
+      window.addEventListener("load", tryPlay);
 
-        // Bursts: stutter + queda rápida + micro variação de playbackRate
-        function startGlitchBursts() {
-          glitchTimer = setInterval(() => {
-            // Intensidade atual manda no quão agressivo é
-            const w = intensity;
-
-            // chance de burst (mais perto, mais chance)
-            const chance = 0.25 + 0.55 * w;
-            if (Math.random() > chance) return;
-
-            // 1) mini "drop" no gate
-            if (audioCtx) {
-              const now = audioCtx.currentTime;
-              const drop = 0.15 + 0.35 * w;
-              gate.gain.cancelScheduledValues(now);
-              gate.gain.setValueAtTime(1.0, now);
-              gate.gain.linearRampToValueAtTime(1.0 - drop, now + 0.02);
-              gate.gain.linearRampToValueAtTime(1.0, now + 0.08);
-            }
-
-            // 2) micro stutter (volta um tiquinho no tempo)
-            try {
-              const back = 0.03 + 0.12 * w; // segundos
-              const t = Math.max(0, bgm.currentTime - back);
-              bgm.currentTime = t;
-            } catch (_) {}
-
-            // 3) warble rápido (muda playbackRate por milissegundos)
-            const originalRate = bgm.playbackRate || 1.0;
-            const wobble = 1 + (Math.random() * 2 - 1) * (0.08 + 0.18 * w); // +-%
-            bgm.playbackRate = Math.max(0.75, Math.min(1.25, wobble));
-
-            setTimeout(() => {
-              bgm.playbackRate = originalRate;
-            }, 90 + Math.random() * 120);
-          }, 650); // frequência base do "sussurro" glitch
-        }
-
-        function stopGlitchBursts() {
-          clearInterval(glitchTimer);
-          glitchTimer = null;
-
-          // volta pra normal
-          try { bgm.playbackRate = 1.0; } catch (_) {}
-          if (audioCtx) {
-            const now = audioCtx.currentTime;
-            wetGain.gain.setTargetAtTime(0, now, 0.05);
-            filter.frequency.setTargetAtTime(12000, now, 0.05);
-            delay.delayTime.setTargetAtTime(0.02, now, 0.05);
-            feedback.gain.setTargetAtTime(0.12, now, 0.08);
-            gate.gain.setTargetAtTime(1.0, now, 0.02);
-          }
-        }
-
-        // ===== Interações =====
-        // Começa áudio no primeiro gesto do usuário (com som liberado)
-        function firstGestureStart() {
-          startAudio();
-          document.removeEventListener("pointerdown", firstGestureStart);
-          document.removeEventListener("keydown", firstGestureStart);
-        }
-
-        document.addEventListener("pointerdown", firstGestureStart, { once: true });
-        document.addEventListener("keydown", firstGestureStart, { once: true });
-
-        // Glitch por proximidade
-        stage.addEventListener("pointermove", onPointerMove);
-        stage.addEventListener("pointerleave", onPointerLeave);
-
-        // Também força um "pico" quando entra exatamente na porta
-        door.addEventListener("pointerenter", () => applyIntensity(1));
-        door.addEventListener("pointerleave", () => applyIntensity(0));
-      })();
+      // fallback: clique em qualquer lugar inicia
+      function unlock() {
+        hint.style.display = "none";
+        tryPlay();
+      }
+      hint.addEventListener("click", unlock);
+      document.addEventListener("pointerdown", unlock, { once: true });
+      document.addEventListener("keydown", unlock, { once: true });
     </script>
   </body>
 </html>
