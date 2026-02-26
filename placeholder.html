@@ -3,175 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>夢殿</title>
+    <title>Hyakki</title>
     <style>
       html, body {
-        height: 100%;
         margin: 0;
+        height: 100%;
         background: #0a0b0c;
       }
+
+      /* Centraliza a imagem e garante que ela caiba na tela inteira */
       .wrap {
         height: 100%;
-        width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
-      }
-      #teaser {
-        max-width: 100vw;
-        max-height: 100vh;
-        object-fit: contain;
-        cursor: pointer;
-        user-select: none;
-        -webkit-user-drag: none;
       }
 
-      /* Debug opcional (ativado com ?debug=1) */
-      #debugBox {
-        position: fixed;
-        border: 2px dashed rgba(255,255,255,0.7);
-        pointer-events: none;
-        display: none;
-        z-index: 10;
+      /* O frame fica do tamanho exato da imagem renderizada */
+      .frame {
+        position: relative;
+        display: inline-block;
+        line-height: 0; /* remove “gap” de inline images */
       }
-      #hint {
-        position: fixed;
-        bottom: 12px;
-        left: 12px;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        font-size: 12px;
-        color: rgba(255,255,255,0.7);
-        display: none;
-        z-index: 10;
+
+      img {
+        display: block;
+        max-width: 100vw;
+        max-height: 100vh;
+        width: auto;
+        height: auto;
+      }
+
+      /* Hotspot invisível sobre a porta (valores em %) */
+      .door-hotspot {
+        position: absolute;
+        left: 51.32%;
+        top: 37.99%;
+        width: 13.96%;
+        height: 18.16%;
+        cursor: pointer;
+
+        /* Debug opcional: descomente pra enxergar a área
+        outline: 2px solid rgba(255, 0, 0, 0.6);
+        background: rgba(255, 0, 0, 0.15);
+        */
       }
     </style>
   </head>
 
   <body>
     <div class="wrap">
-      <img id="teaser" alt="teaser" />
+      <div class="frame">
+        <img src="1.png" alt="Teaser" />
+        <a
+          class="door-hotspot"
+          href="https://SUA-URL-AQUI.example/DESTINO"
+          aria-label="Entrar"
+        ></a>
+      </div>
     </div>
-
-    <div id="debugBox"></div>
-    <div id="hint">debug: clique para ver coords no console</div>
-
-    <script>
-      // ====== CONFIG ======
-      const IMAGE_URL = "1.png"; // <- placeholder
-      const TARGET_URL = "https://URL_DE_DESTINO_AQUI.example"; // <- placeholder
-
-      // Coordenadas da "região da porta" na imagem ORIGINAL (2048x2048)
-      // Calibrado automaticamente a partir da sua imagem enviada:
-      // x: 1053..1335, y: 778..1149
-      const DOOR_BOUNDS = { x1: 1053, y1: 778, x2: 1335, y2: 1149 };
-
-      // Pixel escuro = porta (ajuste se precisar)
-      const DARK_THRESHOLD = 50; // 0..255
-      // ====================
-
-      const img = document.getElementById("teaser");
-      img.src = IMAGE_URL;
-
-      // Canvas oculto para leitura de pixel (pode falhar por CORS se a imagem não for same-origin)
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d", { willReadFrequently: true });
-
-      const urlParams = new URLSearchParams(location.search);
-      const DEBUG = urlParams.get("debug") === "1";
-      const debugBox = document.getElementById("debugBox");
-      const hint = document.getElementById("hint");
-
-      function clamp(n, min, max) {
-        return Math.max(min, Math.min(max, n));
-      }
-
-      function isInsideBounds(x, y, b) {
-        return x >= b.x1 && x <= b.x2 && y >= b.y1 && y <= b.y2;
-      }
-
-      function brightness(r, g, b) {
-        return (r + g + b) / 3;
-      }
-
-      function updateDebugOverlay() {
-        if (!DEBUG) return;
-
-        const rect = img.getBoundingClientRect();
-        const sx = rect.width / img.naturalWidth;
-        const sy = rect.height / img.naturalHeight;
-
-        const left = rect.left + DOOR_BOUNDS.x1 * sx;
-        const top  = rect.top  + DOOR_BOUNDS.y1 * sy;
-        const w    = (DOOR_BOUNDS.x2 - DOOR_BOUNDS.x1) * sx;
-        const h    = (DOOR_BOUNDS.y2 - DOOR_BOUNDS.y1) * sy;
-
-        debugBox.style.left = `${left}px`;
-        debugBox.style.top = `${top}px`;
-        debugBox.style.width = `${w}px`;
-        debugBox.style.height = `${h}px`;
-        debugBox.style.display = "block";
-        hint.style.display = "block";
-      }
-
-      img.addEventListener("load", () => {
-        // Prepara canvas com o tamanho natural da imagem
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-
-        try {
-          ctx.drawImage(img, 0, 0);
-        } catch (e) {
-          // Se der erro aqui (raríssimo), segue sem leitura de pixel
-          console.warn("Falha ao desenhar no canvas (provável CORS):", e);
-        }
-
-        updateDebugOverlay();
-        window.addEventListener("resize", updateDebugOverlay);
-      });
-
-      function handleClick(ev) {
-        const rect = img.getBoundingClientRect();
-
-        // Coordenadas do clique dentro da área renderizada do <img>
-        const cx = ev.clientX - rect.left;
-        const cy = ev.clientY - rect.top;
-
-        // Normaliza para coordenadas da imagem original
-        const x = Math.round((cx / rect.width) * img.naturalWidth);
-        const y = Math.round((cy / rect.height) * img.naturalHeight);
-
-        const xi = clamp(x, 0, img.naturalWidth - 1);
-        const yi = clamp(y, 0, img.naturalHeight - 1);
-
-        if (DEBUG) {
-          console.log("click @", { x: xi, y: yi });
-        }
-
-        // Primeiro filtro: precisa cair na região da porta
-        if (!isInsideBounds(xi, yi, DOOR_BOUNDS)) return;
-
-        // Segundo filtro: pixel precisa ser escuro (porta)
-        let shouldGo = true; // fallback: se não der pra ler pixel, assume porta dentro do bounds
-        try {
-          const data = ctx.getImageData(xi, yi, 1, 1).data; // pode lançar SecurityError (canvas "tainted")
-          const b = brightness(data[0], data[1], data[2]);
-          shouldGo = b < DARK_THRESHOLD;
-        } catch (e) {
-          if (DEBUG) console.warn("Sem leitura de pixel (CORS?). Usando fallback por bounds.", e);
-        }
-
-        if (shouldGo) {
-          window.location.href = TARGET_URL;
-        }
-      }
-
-      // Clique e toque
-      img.addEventListener("click", handleClick);
-      img.addEventListener("pointerdown", (ev) => {
-        // evita duplo disparo em alguns browsers
-        if (ev.pointerType === "touch") handleClick(ev);
-      });
-    </script>
   </body>
 </html>
