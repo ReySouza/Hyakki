@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ONIROS // 極秘</title>
 
-    <!-- Reusa seu CSS base (opcional) -->
     <link rel="stylesheet" href="hyakki.css" />
 
     <style>
-      /* Camada ONIROS por cima do seu hyakki.css */
       :root {
         --paper: #0b0c0e;
         --ink: #e8e8e8;
@@ -148,8 +146,6 @@
       .tiny {
         font-size: 0.88rem;
       }
-
-      /* Pequeno “vazamento” onírico: tremor quase imperceptível quando não autorizado */
       .unauth .doc {
         animation: drift 6s ease-in-out infinite;
       }
@@ -158,7 +154,6 @@
         50% { transform: translate3d(0.6px, -0.6px, 0); }
       }
 
-      /* Caixa de acesso */
       .access {
         border: 1px dashed var(--line);
         border-radius: 10px;
@@ -193,12 +188,6 @@
   </head>
 
   <body class="unauth">
-    <!--
-      ARG (opcional): Base64 de uma linha que você pode trocar depois:
-      QSBQT1JUUyBOWcOCTyDDqSBVTUEgS0VZLCBuw6NvIHVtYSBQT1JUQQ==
-      (isso decodifica pra: "A PORTA NÃO É UMA KEY, não uma PORTA")
-    -->
-
     <div class="doc mono" id="docRoot">
       <div class="topbar">
         <div>
@@ -221,7 +210,7 @@
 
         <div class="panel">
           <div class="muted tiny">Metadados</div>
-          <div>Data: <span class="redact">██/██/████</span> (Reconciliação temporal pendente)</div>
+          <div>Data: <span class="redact">██/██/20██</span> (Reconciliação temporal pendente)</div>
           <div>Autor: <span class="redact">██████████</span></div>
           <div>Local: Kyoto-fu // Kinkaku-ji // Subsolo (Setor <span class="redact">██</span>)</div>
         </div>
@@ -237,9 +226,6 @@
           <input id="sigInput" placeholder="sig=..." autocomplete="off" />
           <br />
           <button id="unlockBtn">Validar selo</button>
-          <div class="muted tiny" style="margin-top:10px;" id="sigHint">
-            Dica: alguns selos são carregados na própria URL (querystring).
-          </div>
         </div>
       </div>
 
@@ -249,7 +235,7 @@
           O alvo “YUMEDONO” apresenta uma estrutura de transição entre vigília e
           um espaço onírico persistente (“NÍVEL-0”), com variações de geometria e causalidade.
           Incursões iniciais resultaram em <span class="redact">████████████</span> e relatos consistentes
-          de um “corredor” que separa os vivos dos sonhos.
+          de um “labirinto" onde 'impureza' é canalizada e presa.
         </p>
         <p class="muted tiny">
           Nota: o ambiente reage à intenção do observador. Registros instrumentais indicam ressonância
@@ -261,16 +247,16 @@
       <div class="panel" id="hypotheses">
         <ol>
           <li><b>Modelo Async (Comparativo):</b> o “mundo dos sonhos” opera como um domínio com regras locais, mas
-            com acesso por <span class="redact">███</span> (gatilhos simbólicos / limiares arquitetônicos).</li>
+            com acesso por gatilhos simbólicos e limiares arquitetônicos.</li>
           <li><b>Modelo de Contaminação:</b> exposição prolongada provoca “aderência” — o observador carrega resíduos do domínio
-            ao retornar. Sintomas incluem <span class="redact">████████</span>.</li>
+            ao retornar. Sintomas incluem Síndrome de Desvelamento Ontológico Lunático, onde o observador é forçado a ver a realidade sem o filtro humano.</li>
           <li><b>Modelo de Isca Cognitiva:</b> o domínio incentiva aproximação por curiosidade, oferecendo “segurança” à distância
             e dissonância ao contato.</li>
+          <li><b>Teoria do Doppleganger:</b> Habitantes do Reino dos Sonhos demonstram ignorância de sua posição como construtos oníricos, representam um relaxamento do Superego e uma hiperexistência que supera as prisões mentais que deveriam os segurar.</li>
         </ol>
         <p class="muted tiny">
           (A)fastar. (B)loquear. (R)eclassificar. (I)solamento. (R)elato. (A)valiar. (S)elar.
         </p>
-        <!-- Acrostic discreto: ABRIRAS -->
       </div>
 
       <h2>3. Registro de Incursões</h2>
@@ -306,7 +292,7 @@
 
     <div class="footclass mono">
       <div><b>SHOCKER // ONIROS</b> — Distribuição Restrita</div>
-      <div class="warn">極秘 // NÃO DIVULGAR</div>
+      <div class="warn">HEIL YAPOOL</div>
     </div>
 
     <script>
