@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ONIROS // 極秘</title>
+
+    <!-- Reusa seu CSS base (opcional) -->
+    <link rel="stylesheet" href="hyakki.css" />
+
+    <style>
+      /* Camada ONIROS por cima do seu hyakki.css */
+      :root {
+        --paper: #0b0c0e;
+        --ink: #e8e8e8;
+        --muted: #a2a2a2;
+        --danger: #ff3b3b;
+        --stamp: rgba(255, 60, 60, 0.85);
+        --line: rgba(162, 162, 162, 0.35);
+      }
+
+      body {
+        background: var(--paper);
+        color: var(--ink);
+      }
+
+      .doc {
+        width: min(980px, 92vw);
+        margin: 40px auto 80px auto;
+      }
+
+      .topbar {
+        display: flex;
+        gap: 16px;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        letter-spacing: 0.2px;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 6px 10px;
+        border: 1px solid var(--line);
+        color: var(--muted);
+        border-radius: 6px;
+      }
+
+      .stamp {
+        border: 2px solid var(--stamp);
+        color: var(--stamp);
+        padding: 10px 14px;
+        border-radius: 10px;
+        transform: rotate(-6deg);
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        user-select: none;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      @media (max-width: 720px) {
+        .grid { grid-template-columns: 1fr; }
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 14px 14px;
+        background: rgba(255,255,255,0.02);
+      }
+
+      hr {
+        border: none;
+        border-top: 1px solid var(--line);
+        width: 100%;
+        margin: 18px 0;
+      }
+
+      h1, h2, h3 {
+        text-align: left;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 1.35rem;
+        margin-top: 10px;
+      }
+
+      h2 {
+        font-size: 1.05rem;
+        margin-top: 18px;
+        color: var(--ink);
+      }
+
+      p, li {
+        line-height: 1.55;
+        color: var(--ink);
+      }
+
+      .muted { color: var(--muted); }
+
+      .redact {
+        display: inline-block;
+        background: #000;
+        color: #000;
+        border-radius: 4px;
+        padding: 0 6px;
+        transform: translateY(-1px);
+      }
+
+      .reveal .redact {
+        background: rgba(255,255,255,0.08);
+        color: var(--ink);
+        border: 1px solid rgba(255,255,255,0.12);
+      }
+
+      .footclass {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 10px 14px;
+        background: rgba(0,0,0,0.75);
+        border-top: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 0.9rem;
+        backdrop-filter: blur(6px);
+      }
+
+      .warn {
+        color: var(--danger);
+        font-weight: 700;
+      }
+
+      .tiny {
+        font-size: 0.88rem;
+      }
+
+      /* Pequeno “vazamento” onírico: tremor quase imperceptível quando não autorizado */
+      .unauth .doc {
+        animation: drift 6s ease-in-out infinite;
+      }
+      @keyframes drift {
+        0%, 100% { transform: translate3d(0,0,0); }
+        50% { transform: translate3d(0.6px, -0.6px, 0); }
+      }
+
+      /* Caixa de acesso */
+      .access {
+        border: 1px dashed var(--line);
+        border-radius: 10px;
+        padding: 12px 14px;
+        margin-top: 14px;
+      }
+
+      .access input {
+        width: min(460px, 100%);
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        background: rgba(0,0,0,0.35);
+        color: var(--ink);
+        outline: none;
+      }
+
+      .access button {
+        margin-top: 10px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.06);
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .access button:hover {
+        background: rgba(255,255,255,0.10);
+      }
+    </style>
+  </head>
+
+  <body class="unauth">
+    <!--
+      ARG (opcional): Base64 de uma linha que você pode trocar depois:
+      QSBQT1JUUyBOWcOCTyDDqSBVTUEgS0VZLCBuw6NvIHVtYSBQT1JUQQ==
+      (isso decodifica pra: "A PORTA NÃO É UMA KEY, não uma PORTA")
+    -->
+
+    <div class="doc mono" id="docRoot">
+      <div class="topbar">
+        <div>
+          <div class="badge">SHOCKER // Divisão: ONIROS</div>
+          <h1>ONIROS (Observação de Níveis, Incursões e Ressonância Onírica Subconsciente)</h1>
+          <div class="muted tiny">Registro Interno: ONIROS-Δ/1545 // Canal: “YUMEDONO” // Status: Ativo</div>
+        </div>
+        <div class="stamp">極秘<br/>TOP SECRET</div>
+      </div>
+
+      <hr />
+
+      <div class="grid">
+        <div class="panel">
+          <div class="muted tiny">Classificação</div>
+          <div><span class="warn">極秘 (Gokuhimitsu)</span> — Distribuição Restrita</div>
+          <div class="muted tiny" style="margin-top:10px;">Nível de Permissão</div>
+          <div>ONIROS-3 / “Black Lotus”</div>
+        </div>
+
+        <div class="panel">
+          <div class="muted tiny">Metadados</div>
+          <div>Data: <span class="redact">██/██/████</span> (Reconciliação temporal pendente)</div>
+          <div>Autor: <span class="redact">██████████</span></div>
+          <div>Local: Kyoto-fu // Kinkaku-ji // Subsolo (Setor <span class="redact">██</span>)</div>
+        </div>
+      </div>
+
+      <div class="access" id="accessBox">
+        <div class="muted tiny">Acesso</div>
+        <div style="margin-top:6px;">
+          Este documento está parcialmente <span class="warn">censurado</span>.
+          Forneça o selo de trânsito ONIROS para leitura integral.
+        </div>
+        <div style="margin-top:10px;">
+          <input id="sigInput" placeholder="sig=..." autocomplete="off" />
+          <br />
+          <button id="unlockBtn">Validar selo</button>
+          <div class="muted tiny" style="margin-top:10px;" id="sigHint">
+            Dica: alguns selos são carregados na própria URL (querystring).
+          </div>
+        </div>
+      </div>
+
+      <h2>1. Sumário Executivo</h2>
+      <div class="panel" id="summary">
+        <p>
+          O alvo “YUMEDONO” apresenta uma estrutura de transição entre vigília e
+          um espaço onírico persistente (“NÍVEL-0”), com variações de geometria e causalidade.
+          Incursões iniciais resultaram em <span class="redact">████████████</span> e relatos consistentes
+          de um “corredor” que separa os vivos dos sonhos.
+        </p>
+        <p class="muted tiny">
+          Nota: o ambiente reage à intenção do observador. Registros instrumentais indicam ressonância
+          psicogênica acima do limiar ONIROS-2.
+        </p>
+      </div>
+
+      <h2>2. Hipóteses Operacionais</h2>
+      <div class="panel" id="hypotheses">
+        <ol>
+          <li><b>Modelo Async (Comparativo):</b> o “mundo dos sonhos” opera como um domínio com regras locais, mas
+            com acesso por <span class="redact">███</span> (gatilhos simbólicos / limiares arquitetônicos).</li>
+          <li><b>Modelo de Contaminação:</b> exposição prolongada provoca “aderência” — o observador carrega resíduos do domínio
+            ao retornar. Sintomas incluem <span class="redact">████████</span>.</li>
+          <li><b>Modelo de Isca Cognitiva:</b> o domínio incentiva aproximação por curiosidade, oferecendo “segurança” à distância
+            e dissonância ao contato.</li>
+        </ol>
+        <p class="muted tiny">
+          (A)fastar. (B)loquear. (R)eclassificar. (I)solamento. (R)elato. (A)valiar. (S)elar.
+        </p>
+        <!-- Acrostic discreto: ABRIRAS -->
+      </div>
+
+      <h2>3. Registro de Incursões</h2>
+      <div class="panel" id="log">
+        <ul>
+          <li><b>INC-01</b> — Equipe entra por estrutura ritual. Retorno com lacunas de memória e um som residual (“água em lótus”).</li>
+          <li><b>INC-02</b> — Medição de ressonância: pico ao se aproximar de uma “porta”. Efeitos no áudio interno: stutter, lowpass, eco curto.</li>
+          <li><b>INC-03</b> — Relato de “imagem proibida”. A equipe descreve sensação de “não deveria estar vendo isso”. <span class="redact">███████</span></li>
+        </ul>
+      </div>
+
+      <h2>4. Trechos Reclassificados</h2>
+      <div class="panel" id="reclass">
+        <p>
+          O fenômeno “PORTA” não é apenas passagem física; é um mecanismo de seleção. Observadores relatam que o limiar
+          <span class="redact">não se abre</span> — ele <span class="redact">decide</span>.
+        </p>
+        <p>
+          Entidade/força referenciada como <span class="redact">“O PRÍSTINO”</span> está associada a “verdade” e
+          a um tipo de luz que <span class="redact">queima sem calor</span>.
+        </p>
+        <p class="muted tiny">
+          Diretriz ONIROS: jamais nomear o que observa você.
+        </p>
+      </div>
+
+      <hr />
+      <div class="muted tiny">
+        Este documento contém inconsistências temporais e semânticas esperadas em domínios oníricos. A leitura prolongada
+        pode induzir sonhos lúcidos, dissociação leve ou compulsão investigativa.
+      </div>
+    </div>
+
+    <div class="footclass mono">
+      <div><b>SHOCKER // ONIROS</b> — Distribuição Restrita</div>
+      <div class="warn">極秘 // NÃO DIVULGAR</div>
+    </div>
+
+    <script>
+      (function () {
+        const docRoot = document.getElementById("docRoot");
+        const accessBox = document.getElementById("accessBox");
+        const sigInput = document.getElementById("sigInput");
+        const unlockBtn = document.getElementById("unlockBtn");
+
+        // === ARG: selo esperado (placeholder) ===
+        // Troque por algo seu: pode ser uma palavra, hash curto, ou algo derivado do puzzle.
+        const EXPECTED_SIG = "PLACEHOLDER_SIG";
+
+        function getSigFromUrl() {
+          const params = new URLSearchParams(window.location.search);
+          return params.get("sig") || "";
+        }
+
+        function setMode(authorized) {
+          document.body.classList.toggle("unauth", !authorized);
+          docRoot.classList.toggle("reveal", authorized);
+
+          // Se autorizado, pode esconder a caixa de acesso
+          accessBox.style.display = authorized ? "none" : "block";
+        }
+
+        function tryUnlock(sig) {
+          const ok = (sig || "").trim() === EXPECTED_SIG;
+          setMode(ok);
+          return ok;
+        }
+
+        // Tenta destravar se já veio pela URL
+        const urlSig = getSigFromUrl();
+        if (urlSig) {
+          tryUnlock(urlSig);
+        } else {
+          setMode(false);
+        }
+
+        unlockBtn.addEventListener("click", () => {
+          tryUnlock(sigInput.value);
+        });
+
+        // Enter também valida
+        sigInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") tryUnlock(sigInput.value);
+        });
+      })();
+    </script>
+  </body>
+</html>
